@@ -34,7 +34,8 @@
         <item android:id="@+id/forward_menu_id"
             android:title="@string/forward"
             android:alphabeticShortcut="k"
-            android:icon="@*android:drawable/ic_menu_forward" />
+            android:icon="@*android:drawable/ic_menu_forward" ></item>
+		<item android:id="@+id/incog_tab_menu_id" android:alphabeticShortcut="i" android:icon="@drawable/ic_menu_new_window" android:title="@string/incog_tab"></item>
         <item android:id="@+id/add_bookmark_menu_id"
             android:title="@string/save_to_bookmarks"
             android:icon="@drawable/ic_menu_add_bookmark"

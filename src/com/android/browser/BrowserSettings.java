@@ -84,6 +84,9 @@ class BrowserSettings extends Observable {
     private boolean landscapeOnly;
     private boolean loadsPageInOverviewMode;
     private boolean showDebugSettings;
+    private boolean showZoomControls = true;
+    private boolean fullScreen = false;
+    
     // HTML5 API flags
     private boolean appCacheEnabled;
     private boolean databaseEnabled;
@@ -193,18 +196,28 @@ class BrowserSettings extends Observable {
             WebSettings s = mSettings;
 
             s.setLayoutAlgorithm(b.layoutAlgorithm);
-            if (b.userAgent == 0) {
-                // use the default ua string
-                s.setUserAgentString(null);
-            } else if (b.userAgent == 1) {
-                s.setUserAgentString(DESKTOP_USERAGENT);
-            } else if (b.userAgent == 2) {
-                s.setUserAgentString(IPHONE_USERAGENT);
-            } else if (b.userAgent == 3) {
-                s.setUserAgentString(IPAD_USERAGENT);
-            } else if (b.userAgent == 4) {
-                s.setUserAgentString(FROYO_USERAGENT);
+
+            switch (b.userAgent){
+                case 0:
+                    s.setUserAgentString(null);
+                    break;
+                case 1:
+                    s.setUserAgentString(DESKTOP_USERAGENT);
+                    break;
+                case 2:
+                    s.setUserAgentString(IPHONE_USERAGENT);
+                    break;
+                case 3:
+                    s.setUserAgentString(IPAD_USERAGENT);
+                    break;
+                case 4:
+                    s.setUserAgentString(FROYO_USERAGENT);
+                    break;
+                default:
+                    s.setUserAgentString(null);
+                    break;
             }
+
             s.setUseWideViewPort(b.useWideViewPort);
             s.setLoadsImagesAutomatically(b.loadsImagesAutomatically);
             s.setJavaScriptEnabled(b.javaScriptEnabled);
@@ -224,6 +237,7 @@ class BrowserSettings extends Observable {
             s.setSavePassword(b.rememberPasswords);
             s.setLoadWithOverviewMode(b.loadsPageInOverviewMode);
             s.setPageCacheCapacity(pageCacheCapacity);
+            s.showZoomControls(b.showZoomControls);
 
             // WebView inside Browser doesn't want initial focus to be set.
             s.setNeedInitialFocus(false);
@@ -341,6 +355,10 @@ class BrowserSettings extends Observable {
         zoomDensity = WebSettings.ZoomDensity.valueOf(
                 p.getString(PREF_DEFAULT_ZOOM, zoomDensity.name()));
         autoFitPage = p.getBoolean("autofit_pages", autoFitPage);
+        
+        showZoomControls = p.getBoolean("show_zoom_controls", showZoomControls);
+        fullScreen = p.getBoolean("full_screen_mode", fullScreen);
+        
         loadsPageInOverviewMode = p.getBoolean("load_page",
                 loadsPageInOverviewMode);
         boolean landscapeOnlyTemp =
@@ -357,7 +375,7 @@ class BrowserSettings extends Observable {
         defaultTextEncodingName =
                 p.getString(PREF_DEFAULT_TEXT_ENCODING,
                         defaultTextEncodingName);
-
+        userAgent = Integer.parseInt(p.getString("user_agent", "0"));
         showDebugSettings =
                 p.getBoolean(PREF_DEBUG_SETTINGS, showDebugSettings);
         // Debug menu items have precidence if the menu is visible
@@ -403,7 +421,11 @@ class BrowserSettings extends Observable {
 
         update();
     }
-
+    
+    public boolean isFullScreen() {
+        return fullScreen;
+    }
+    
     public String getHomePage() {
         return homeUrl;
     }
