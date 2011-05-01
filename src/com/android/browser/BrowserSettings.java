@@ -108,7 +108,7 @@ class BrowserSettings extends Observable {
     public WebSettings.LayoutAlgorithm layoutAlgorithm =
         WebSettings.LayoutAlgorithm.NARROW_COLUMNS;
     private boolean useWideViewPort = true;
-    private int userAgent = 0;
+    private int userAgent = 1;
     private boolean tracing = false;
     private boolean lightTouch = false;
     private boolean navDump = false;
@@ -377,7 +377,7 @@ class BrowserSettings extends Observable {
         defaultTextEncodingName =
                 p.getString(PREF_DEFAULT_TEXT_ENCODING,
                         defaultTextEncodingName);
-        userAgent = Integer.parseInt(p.getString("user_agent", "0"));
+        userAgent = Integer.parseInt(p.getString("user_agent", "1"));
         showDebugSettings =
                 p.getBoolean(PREF_DEBUG_SETTINGS, showDebugSettings);
         // Debug menu items have precidence if the menu is visible
@@ -401,7 +401,7 @@ class BrowserSettings extends Observable {
             tracing = p.getBoolean("enable_tracing", tracing);
             lightTouch = p.getBoolean("enable_light_touch", lightTouch);
             navDump = p.getBoolean("enable_nav_dump", navDump);
-            userAgent = Integer.parseInt(p.getString("user_agent", "0"));
+            userAgent = Integer.parseInt(p.getString("user_agent", "1"));
         }
         // JS flags is loaded from DB even if showDebugSettings is false,
         // so that it can be set once and be effective all the time.
