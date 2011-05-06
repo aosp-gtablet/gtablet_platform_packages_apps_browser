@@ -39,7 +39,7 @@ locales = ["cs-CZ", "da-DK", "de-AT", "de-CH", "de-DE", "el-GR", "en-AU",
 
 google_data = ["google", "Google", "google.com",
   "http://www.google.com/favicon.ico",
-  "http://www.google.com/m?hl={language}&amp;ie={inputEncoding}&amp;source=android-browser&amp;q={searchTerms}",
+  "http://www.google.com/search?hl={language}&amp;source=hp&amp;q={searchTerms}",
   "UTF-8",
   "http://www.google.com/complete/search?hl={language}&amp;json=true&amp;q={searchTerms}"]
 
